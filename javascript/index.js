@@ -711,9 +711,22 @@ const data = {
   ],
 }
 
-// Recorrer el array de los events y obtener por un lado la fecha de base o de referencia y por el otro los events
-// Para la pagina index el loop debera generar un template dinamico, con tantos datos como objetos contenga el array
-// Dibujar las cards con .map
+// API caida, no funciona, no se puede hacer el fetch
+const getEvents = async () => {
+  try {
+    const response = await fetch(
+      "https://amazingeventsapi.herokuapp.com/api/events"
+    )
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.log("Error", error.message)
+  }
+}
+
+// getEvents()
+
+// Dibujando en el DOM
 
 const events = data.events.map((event) => {
   return event.name
@@ -721,22 +734,31 @@ const events = data.events.map((event) => {
 
 function paintDom(events) {
   let section = ``
+  let replace = ``
 
+  const newImage = "https://http.cat/503"
   const tagToUpdate = document.getElementById("root")
+  const currentUrl = window.location.pathname
+
+  if (currentUrl === "/index.html") {
+    replace = "./pages/details.html"
+  } else {
+    replace = "./details.html"
+  }
 
   for (let i = 0; i < data.events.length; i++) {
     section += `
     <div class="col">
                     <div class="card h-100">
                         <div class="card-img-container">
-                            <img src="${data.events[i].image}" class="card-img-top" alt="...">
+                            <img src="${newImage}" class="card-img-top" alt="...">
                         </div>
                         <div class="card-body text-center">
                             <h3 class="card-title">${data.events[i].name}</h3>
                             <p class="card-text">${data.events[i].description}</p>
                             <div class="d-flex justify-content-between">
                                 <p>Price: ${data.events[i].price}</p>
-                                <a href="./pages/details.html" target="_blank" class="btn btn-primary view">View
+                                <a href="${replace}" target="_blank" class="btn btn-primary view" id="buttonRemplazar">View
                                     more...</a>
                                     <p class="card-category hidden">Categoria: ${data.events[i].category}</p>
                             </div>
@@ -837,3 +859,17 @@ inputCheckbox.addEventListener("change", (e) => {
   }
   console.log("checkedCategories", checkedCategories)
 })
+
+let cardsTitle = document.querySelectorAll(".card-title")
+let buttonCards = document.querySelectorAll(".view")
+
+for (let i = 0; i < cardsTitle.length; i++) {
+  console.log(cardsTitle[i].outerText)
+
+  buttonCards[i].addEventListener("click", () => {
+    localStorage.setItem(
+      "title",
+      cardsTitle[i].outerText.toLowerCase().replaceAll(" ", "-")
+    )
+  })
+}

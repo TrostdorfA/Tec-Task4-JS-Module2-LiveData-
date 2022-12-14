@@ -711,11 +711,64 @@ const data = {
   ],
 }
 
-const events = data.events.map((event) => {
-  return event.name
-})
+const getTitleCardDetail = localStorage.getItem("title")
+console.log(getTitleCardDetail)
+const cardDetails = document.getElementById("cardDetails")
 
-const eventDetails = (event) => {
-  localStorage.setItem("event", JSON.stringify(event))
-  window.location.href = "details.html"
+function renderCardDetail() {
+  const currentUrl = window.location.pathname
+  console.log(currentUrl)
+  const newImage = "https://http.cat/503"
+
+  /* <div class="container details-container">
+            <div class="container details-card">
+                <div class="details-img">
+                    <img src="../images/Salida-al-museo5.jpg" class="card-img-top" alt="...">
+                </div>
+                <div class="details-info">
+                    <h3>Event name</h3>
+                    <div class="event-description">
+                        <p>Date:</p>
+                        <p>This is a the event description</p>
+                        <p>Category:</p>
+                        <p>Place:</p>
+                        <p>Capacity:</p>
+                        <p>Assistance or estimate:</p>
+                        <p>Price: 800.00€</p>
+                    </div>
+                    <p><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div> */
+
+  data.events.forEach((event) => {
+    if (
+      event.name.toLowerCase().replaceAll(" ", "-").includes(getTitleCardDetail)
+    ) {
+      cardDetails.innerHTML = `
+      <div class="container details-container">
+            <div class="container details-card">
+                <div class="details-img">
+                    <img src="${newImage}" class="card-img-top" alt="...">
+                </div>
+                <div class="details-info">
+                    <h3>${event.name}</h3>
+                    <div class="event-description">
+                        <p>Date: ${event.date}</p>
+                        <p>${event.description}</p>
+                        <p>Category: ${event.category}</p>
+                        <p>Place: ${event.place}</p>
+                        <p>Capacity: ${event.capacity}</p>
+                        <p>Assistance or estimate: ${event.assistance}</p>
+                        <p>Price: ${event.price}€</p>
+                    </div>
+                    <p><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+      `
+    }
+  })
 }
+
+renderCardDetail()
