@@ -1,4 +1,4 @@
-# Task03 for Module2 Iniciatec FrontEnd 🤖
+# Task04 for Module2 Iniciatec FrontEnd 🤖
 
 Continuing with the course, for this task we were asked to include and generate categories checkboxes to filter the data and to add functionality to the searchBar.
 
