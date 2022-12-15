@@ -721,7 +721,14 @@ function paintDom(eventos) {
   let section = ``
   let replace = ``
 
-  const newImage = "https://http.cat/503"
+  // Usar un try catch para evitar que se rompa la página si no hay imagen
+
+  try {
+    newImage = data.events[i].image
+  } catch (error) {
+    newImage = "https://i.ytimg.com/vi/D1rlGA_UGrY/maxresdefault.jpg"
+  }
+
   const tagToUpdate = document.getElementById("root")
   const currentUrl = window.location.pathname
 
@@ -787,7 +794,7 @@ const searchFilterEvents = () => {
   // Filtrando paintDom por buscador
 
   const inputSearch = document.getElementById("searchInput")
-  console.log("inputSearch", inputSearch)
+  // console.log("inputSearch", inputSearch)
 
   const eventCards = document.querySelectorAll(".col")
 
@@ -795,7 +802,7 @@ const searchFilterEvents = () => {
     const searchValue = e.target.value.toLowerCase()
 
     eventCards.forEach((card) => {
-      console.log("card", card)
+      //  console.log("card", card)
       const cardTitle = card
         .querySelector(".card-title")
         .textContent.toLowerCase()
@@ -821,7 +828,7 @@ const searchFilterEvents = () => {
   // Filtrando paintDom por checkboxs
 
   const inputCheckbox = document.getElementById("categories")
-  console.log("inputCheckbox", inputCheckbox)
+  //  console.log("inputCheckbox", inputCheckbox)
 
   const elementsCategories = document.getElementsByClassName("card-category")
 
@@ -857,7 +864,7 @@ const searchFilterEvents = () => {
         )
       }
     }
-    console.log("values", values)
+    //    console.log("values", values)
 
     const cards = document.querySelectorAll(".col:not(.hidden)").length
 
@@ -875,7 +882,7 @@ let cardsTitle = document.querySelectorAll(".card-title")
 let buttonCards = document.querySelectorAll(".view")
 
 for (let i = 0; i < cardsTitle.length; i++) {
-  console.log(cardsTitle[i].outerText)
+  //  console.log(cardsTitle[i].outerText)
 
   buttonCards[i].addEventListener("click", () => {
     localStorage.setItem(

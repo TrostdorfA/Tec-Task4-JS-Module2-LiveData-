@@ -712,34 +712,17 @@ const data = {
 }
 
 const getTitleCardDetail = localStorage.getItem("title")
-console.log(getTitleCardDetail)
+// console.log(getTitleCardDetail)
 const cardDetails = document.getElementById("cardDetails")
 
 function renderCardDetail() {
-  const currentUrl = window.location.pathname
-  console.log(currentUrl)
-  const newImage = "https://http.cat/503"
+  //  console.log(currentUrl)
 
-  /* <div class="container details-container">
-            <div class="container details-card">
-                <div class="details-img">
-                    <img src="../images/Salida-al-museo5.jpg" class="card-img-top" alt="...">
-                </div>
-                <div class="details-info">
-                    <h3>Event name</h3>
-                    <div class="event-description">
-                        <p>Date:</p>
-                        <p>This is a the event description</p>
-                        <p>Category:</p>
-                        <p>Place:</p>
-                        <p>Capacity:</p>
-                        <p>Assistance or estimate:</p>
-                        <p>Price: 800.00€</p>
-                    </div>
-                    <p><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div> */
+  try {
+    newImage = data.events[i].image
+  } catch (error) {
+    newImage = "https://www.twaino.com/wp-content/uploads/2022/07/Error-503.png"
+  }
 
   data.events.forEach((event) => {
     if (

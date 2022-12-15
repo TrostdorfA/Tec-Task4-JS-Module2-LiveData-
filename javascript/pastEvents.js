@@ -721,7 +721,12 @@ function paintDom(eventos) {
   let section = ``
   let replace = ``
 
-  const newImage = "https://http.cat/503"
+  try {
+    newImage = data.events[i].image
+  } catch (error) {
+    newImage = "https://i.ytimg.com/vi/D1rlGA_UGrY/maxresdefault.jpg"
+  }
+
   const tagToUpdate = document.getElementById("root")
   const currentUrl = window.location.pathname
 
@@ -786,7 +791,7 @@ paintCategories(uniqueCategories)
 // Filtrando paintDom por buscador
 
 const inputSearch = document.getElementById("searchInput")
-console.log("inputSearch", inputSearch)
+//console.log("inputSearch", inputSearch)
 
 const eventCards = document.querySelectorAll(".col")
 
@@ -818,7 +823,7 @@ inputSearch.addEventListener("keyup", (e) => {
 // Filtrando paintDom por checkboxs
 
 const inputCheckbox = document.getElementById("categories")
-console.log("inputCheckbox", inputCheckbox)
+//console.log("inputCheckbox", inputCheckbox)
 
 const elementsCategories = document.getElementsByClassName("card-category")
 
@@ -854,7 +859,7 @@ inputCheckbox.addEventListener("change", (e) => {
       )
     }
   }
-  console.log("values", values)
+  //  console.log("values", values)
 
   const cards = document.querySelectorAll(".col:not(.hidden)").length
 
@@ -869,7 +874,7 @@ let cardsTitle = document.querySelectorAll(".card-title")
 let buttonCards = document.querySelectorAll(".view")
 
 for (let i = 0; i < cardsTitle.length; i++) {
-  console.log(cardsTitle[i].outerText)
+  //console.log(cardsTitle[i].outerText)
 
   buttonCards[i].addEventListener("click", () => {
     localStorage.setItem(

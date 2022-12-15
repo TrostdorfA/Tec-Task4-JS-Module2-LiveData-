@@ -1,4 +1,4 @@
-# Task04 for Module2 Iniciatec FrontEnd 🤖
+# Task04 for Module2 Iniciatec FrontEnd 📚
 
 Continuing with the course, for this task we were asked to integrate the web app with the API of the previous task, to obtain the data of the events and display them on the stats page.
 

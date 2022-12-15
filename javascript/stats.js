@@ -720,16 +720,22 @@ let dataEvents = [...data.events]
 let eventsByCapacity = dataEvents.sort((a, b) => a.capacity - b.capacity)
 
 let topCapacity = eventsByCapacity.slice(0, eventsByCapacity.length * 0.1)
-console.log("Los eventos con mayor capacidad son: ", topCapacity)
+//console.log("Los eventos con mayor capacidad son: ", topCapacity)
 
-// Crear un array ordenado por asistencia
+// Crear un array ordenado por asistencia + estimacion
 
 let eventsByAssistance = dataEvents
-  .filter((event) => event.assistance)
-  .sort((a, b) => a.assistance - b.assistance)
+  .filter((event) => event.assistance + event.estimate)
+  .sort((a, b) => a.assistance + a.estimate - (b.assistance + b.estimate))
 
 let topAssistance = eventsByAssistance.slice(0, eventsByAssistance.length * 0.1)
-console.log("Los eventos con mayor asistencia son: ", topAssistance)
+//console.log("Los eventos con mayor asistencia son: ", topAssistance)
+
+let lowAssistanceTop = eventsByAssistance.slice(
+  eventsByAssistance.length * 0.9,
+  eventsByAssistance.length * 1
+)
+//console.log("Los eventos con menor asistencia son: ", lowAssistanceTop)
 
 // Array por mayor y menor porcentaje de asistencia
 
@@ -742,19 +748,43 @@ let eventsByPercentage = dataEvents
   .sort((a, b) => b.percentage - a.percentage)
 
 let topPercentage = eventsByPercentage.slice(0, eventsByPercentage.length * 0.1)
-console.log(
-  "Los eventos con mayor porcentaje de asistencia son: ",
-  topPercentage
-)
+//console.log("Los eventos con mayor porcentaje de asistencia son: ", topPercentage)
 
 let lowPercentageTop = eventsByPercentage.slice(
   eventsByPercentage.length * 0.9,
   eventsByPercentage.length * 1
 )
-console.log(
-  "Los eventos con menor porcentaje de asistencia son: ",
-  lowPercentageTop
+//console.log("Los eventos con menor porcentaje de asistencia son: ", lowPercentageTop)
+
+// Array por mayor y menor porcentaje de estimacion
+
+let eventsByPercentageEstimate = dataEvents
+  .filter((event) => event.estimate)
+  .map((event) => {
+    let percentage = (event.estimate * 100) / event.capacity
+    return { ...event, percentage }
+  })
+  .sort((a, b) => b.percentage - a.percentage)
+
+let topPercentageEstimate = eventsByPercentageEstimate.slice(
+  0,
+  eventsByPercentageEstimate.length * 0.1
 )
+//console.log("Los eventos con mayor porcentaje de estimacion son: ", topPercentageEstimate)
+
+let lowPercentageEstimateTop = eventsByPercentageEstimate.slice(
+  eventsByPercentageEstimate.length * 0.9,
+  eventsByPercentageEstimate.length * 1
+)
+//console.log("Los eventos con menor porcentaje de estimacion son: ", lowPercentageEstimateTop)
+
+// topPercentage + topPercentageEstimate
+
+let topPercentageAndEstimate = topPercentage.concat(topPercentageEstimate)
+//console.log("Los eventos con mayor porcentaje de asistencia y estimacion son: ", topPercentageAndEstimate)
+
+let lowPercentageAndEstimate = lowPercentageTop.concat(lowPercentageEstimateTop)
+//console.log("Los eventos con menor porcentaje de asistencia y estimacion son: ", lowPercentageAndEstimate)
 
 // Conversion de fechas
 
@@ -791,26 +821,23 @@ function dateConverter(event) {
 let eventsFuture = dataEvents.filter(
   (event) => dateConverter(event) > dateTimeStamp
 )
-console.log("Los eventos futuros son: ", eventsFuture)
+//console.log("Los eventos futuros son: ", eventsFuture)
 
 // Array de categorias de eventos futuros sin repetir
 
 let eventsCategories = eventsFuture.map((event) => event.category)
 let eventsCategoriesNoRepeat = [...new Set(eventsCategories)]
-console.log("Las categorias de eventos futuros son: ", eventsCategoriesNoRepeat)
+//console.log("Las categorias de eventos futuros son: ", eventsCategoriesNoRepeat)
 
 // Array de categorias de eventos pasados sin repetir
 
 let eventsPast = dataEvents.filter(
   (event) => dateConverter(event) < dateTimeStamp
 )
-console.log("Los eventos pasados son: ", eventsPast)
+//console.log("Los eventos pasados son: ", eventsPast)
 let eventsPastCategories = eventsPast.map((event) => event.category)
 let eventsPastCategoriesNoRepeat = [...new Set(eventsPastCategories)]
-console.log(
-  "Las categorias de eventos pasados son: ",
-  eventsPastCategoriesNoRepeat
-)
+//console.log("Las categorias de eventos pasados son: ", eventsPastCategoriesNoRepeat)
 
 // Calculo de ingresos
 
@@ -830,7 +857,7 @@ let eventsFutureIncomes = eventsFuture
   .filter((event) => event.estimate)
   .map((event) => incomesFuture(event))
   .reduce((acc, event) => acc + event, 0)
-console.log("Los ingresos de eventos futuros son: ", eventsFutureIncomes)
+//console.log("Los ingresos de eventos futuros son: ", eventsFutureIncomes)
 
 // Calculo de ingresos de eventos pasados
 
@@ -838,7 +865,7 @@ let eventsPastIncomes = eventsPast
   .filter((event) => event.assistance)
   .map((event) => incomesPast(event))
   .reduce((acc, event) => acc + event, 0)
-console.log("Los ingresos de eventos pasados son: ", eventsPastIncomes)
+//console.log("Los ingresos de eventos pasados son: ", eventsPastIncomes)
 
 // Porcentaje de asistencia de eventos futuros
 
@@ -857,10 +884,7 @@ let upcomingEventsAttendancePercentageAverage =
     0
   ) / upcomingEventsAttendancePercentageArray.length
 
-console.log(
-  "El porcentaje de asistencia de eventos futuros es: ",
-  upcomingEventsAttendancePercentageAverage
-)
+//console.log("El porcentaje de asistencia de eventos futuros es: ", upcomingEventsAttendancePercentageAverage)
 
 // Porcentaje de asistencia de eventos pasados
 
@@ -876,17 +900,13 @@ let pastEventsAttendancePercentageArray = eventsPast
 let pastEventsAttendancePercentageAverage =
   pastEventsAttendancePercentageArray.reduce((acc, event) => acc + event, 0) /
   pastEventsAttendancePercentageArray.length
-
-console.log(
-  "El porcentaje de asistencia de eventos pasados es: ",
-  pastEventsAttendancePercentageAverage
-)
+//console.log("El porcentaje de asistencia de eventos pasados es: ", pastEventsAttendancePercentageAverage)
 
 // Colocar estadisticas en la tabla del DOM
-// Columna de mayor porcentaje de asistencia
+// Columna de mayor porcentaje de asistencia y estimacion
 
 const colHighestAssistance = document.getElementById("h-assistance")
-topPercentage.forEach((event) => {
+topPercentageAndEstimate.forEach((event) => {
   let divHighestAssistance = document.createElement("div")
   divHighestAssistance.innerHTML = `${event.name} - ${event.percentage.toFixed(
     2
@@ -897,7 +917,7 @@ topPercentage.forEach((event) => {
 // Columna de menor porcentaje de asistencia
 
 const colLowestAssistance = document.getElementById("l-assistance")
-lowPercentageTop.forEach((event) => {
+lowPercentageAndEstimate.forEach((event) => {
   let divLowestAssistance = document.createElement("div")
   divLowestAssistance.innerHTML = `${event.name} - ${event.percentage.toFixed(
     2

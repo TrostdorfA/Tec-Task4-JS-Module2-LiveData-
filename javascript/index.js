@@ -736,7 +736,12 @@ function paintDom(events) {
   let section = ``
   let replace = ``
 
-  const newImage = "https://http.cat/503"
+  try {
+    newImage = data.events[i].image
+  } catch (error) {
+    newImage = "https://i.ytimg.com/vi/D1rlGA_UGrY/maxresdefault.jpg"
+  }
+
   const tagToUpdate = document.getElementById("root")
   const currentUrl = window.location.pathname
 
@@ -799,7 +804,7 @@ paintCategories(uniqueCategories)
 // Filtrando paintDom por buscador
 
 const inputSearch = document.getElementById("searchInput")
-console.log("inputSearch", inputSearch)
+//console.log("inputSearch", inputSearch)
 
 const eventCards = document.querySelectorAll(".col")
 
@@ -807,7 +812,7 @@ inputSearch.addEventListener("keyup", (e) => {
   const searchValue = e.target.value.toLowerCase()
 
   eventCards.forEach((card) => {
-    console.log("card", card)
+    //  console.log("card", card)
     const cardTitle = card
       .querySelector(".card-title")
       .textContent.toLowerCase()
@@ -831,7 +836,7 @@ inputSearch.addEventListener("keyup", (e) => {
 // Filtrando paintDom por checkboxs
 
 const inputCheckbox = document.getElementById("categories")
-console.log("inputCheckbox", inputCheckbox)
+//console.log("inputCheckbox", inputCheckbox)
 
 inputCheckbox.addEventListener("change", (e) => {
   let checkedCategories = []
@@ -857,14 +862,14 @@ inputCheckbox.addEventListener("change", (e) => {
       eventCards[i].classList.remove("hidden")
     }
   }
-  console.log("checkedCategories", checkedCategories)
+  //  console.log("checkedCategories", checkedCategories)
 })
 
 let cardsTitle = document.querySelectorAll(".card-title")
 let buttonCards = document.querySelectorAll(".view")
 
 for (let i = 0; i < cardsTitle.length; i++) {
-  console.log(cardsTitle[i].outerText)
+  //  console.log(cardsTitle[i].outerText)
 
   buttonCards[i].addEventListener("click", () => {
     localStorage.setItem(
